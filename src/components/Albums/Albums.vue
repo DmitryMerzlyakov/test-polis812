@@ -3,7 +3,7 @@
     <h2>Albums by {{ selectedUser.name }}</h2>
     <div class="albums">
       <AlbumsItem
-        v-for="album in albumsState"
+        v-for="album in contentState"
         :key="album.id"
         :thisAlbum="album" />
     </div>
@@ -25,13 +25,13 @@ export default {
     AlbumsItem,
   },
   methods: {
-    ...mapActions(["getUserAlbums"]),
+    ...mapActions(["getUsersContent"]),
   },
   computed: {
-    ...mapGetters(["albumsState", "selectedUser"]),
+    ...mapGetters(["contentState", "selectedUser"]),
   },
   async mounted() {
-    await this.getUserAlbums(this.id);
+    await this.getUsersContent({ id: this.id, posts: "albums" });
   },
 };
 </script>

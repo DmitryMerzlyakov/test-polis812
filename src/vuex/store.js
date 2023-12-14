@@ -7,22 +7,17 @@ Vue.use(Vuex);
 let store = new Vuex.Store({
   state: {
     users: [],
-    albums: [],
-    posts: [],
+    content: [],
     photos: [],
     user: {},
     searchName: "",
-    userContent: "",
   },
   mutations: {
     getUsersFromApi: (state, users) => {
       state.users = users;
     },
-    getUserAlbumsFromApi: (state, albums) => {
-      state.albums = albums;
-    },
-    getUserPostsFromApi: (state, posts) => {
-      state.posts = posts;
+    getUserContentFromApi: (state, content) => {
+      state.content = content;
     },
     getUserPhotosFromApi: (state, photos) => {
       state.photos = photos;
@@ -32,9 +27,6 @@ let store = new Vuex.Store({
     },
     searchByName: (state, value) => {
       state.searchName = value;
-    },
-    changeUserContent: (state, userContent) => {
-      state.userContent = userContent;
     },
   },
   actions: {
@@ -46,12 +38,15 @@ let store = new Vuex.Store({
         return users.data;
       });
     },
-    getUserAlbums({ commit }, id) {
-      return axios(`https://jsonplaceholder.typicode.com/albums?userId=${id}`, {
-        method: "GET",
-      }).then((albums) => {
-        commit("getUserAlbumsFromApi", albums.data);
-        return albums.data;
+    getUsersContent({ commit }, body) {
+      return axios(
+        `https://jsonplaceholder.typicode.com/${body.posts}?userId=${body.id}`,
+        {
+          method: "GET",
+        },
+      ).then((content) => {
+        commit("getUserContentFromApi", content.data);
+        return content.data;
       });
     },
     getUserPhotos({ commit }, id) {
@@ -65,14 +60,6 @@ let store = new Vuex.Store({
         return photos.data;
       });
     },
-    getUserPosts({ commit }, id) {
-      return axios(`https://jsonplaceholder.typicode.com/posts?userId=${id}`, {
-        method: "GET",
-      }).then((posts) => {
-        commit("getUserPostsFromApi", posts.data);
-        return posts.data;
-      });
-    },
     getSearchName({ commit }, value) {
       commit("searchByName", value);
     },
@@ -80,19 +67,13 @@ let store = new Vuex.Store({
       commit("selectedUser", user);
       return user;
     },
-    getChangeUserContent({ commit }, userContent) {
-      commit("changeUserContent", userContent);
-    },
   },
   getters: {
     usersState(state) {
       return state.users;
     },
-    albumsState(state) {
-      return state.albums;
-    },
-    postsState(state) {
-      return state.posts;
+    contentState(state) {
+      return state.content;
     },
     photosState(state) {
       return state.photos;
@@ -102,9 +83,6 @@ let store = new Vuex.Store({
     },
     selectedUser(state) {
       return state.user;
-    },
-    selectedUserContent(state) {
-      return state.userContent;
     },
   },
 });

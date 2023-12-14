@@ -2,7 +2,7 @@
   <div class="wrapper">
     <h2>Posts by {{ selectedUser.name }}</h2>
     <div class="posts">
-      <PostsItem v-for="post in postsState" :key="post.id" :thisPost="post" />
+      <PostsItem v-for="post in contentState" :key="post.id" :thisPost="post" />
     </div>
   </div>
 </template>
@@ -22,13 +22,13 @@ export default {
     PostsItem,
   },
   methods: {
-    ...mapActions(["getUserPosts"]),
+    ...mapActions(["getUsersContent"]),
   },
   computed: {
-    ...mapGetters(["postsState", "selectedUser"]),
+    ...mapGetters(["contentState", "selectedUser"]),
   },
   async mounted() {
-    await this.getUserPosts(this.id);
+    await this.getUsersContent({ id: this.id, posts: "posts" });
   },
 };
 </script>

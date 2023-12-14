@@ -27,15 +27,10 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapActions } from "vuex";
 
 export default {
   name: "CatalogItem",
-  data() {
-    return {
-      content: "",
-    };
-  },
   props: {
     thisUser: {
       type: Object,
@@ -47,18 +42,13 @@ export default {
   methods: {
     ...mapActions(["getUserInfo", "getChangeUserContent"]),
     handleClickUserPosts() {
-      this.$router.push(`/user/${this.thisUser.id}`);
+      this.$router.push(`/user/${this.thisUser.id}/posts`);
       this.getUserInfo(this.thisUser);
-      this.getChangeUserContent(false);
     },
     handleClickUserAlbums() {
-      this.$router.push(`/user/${this.thisUser.id}`);
+      this.$router.push(`/user/${this.thisUser.id}/albums`);
       this.getUserInfo(this.thisUser);
-      this.getChangeUserContent(true);
     },
-  },
-  computed: {
-    ...mapGetters(["selectedUserContent"]),
   },
 };
 </script>

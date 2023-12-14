@@ -12,7 +12,7 @@ const routes = [
     component: TheMain,
   },
   {
-    path: "/user/:id",
+    path: "/user/:id/:content",
     component: TheUser,
   },
 ];
